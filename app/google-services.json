@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "319520875921",
+    "firebase_url": "https://recone-6e5f7.firebaseio.com",
+    "project_id": "recone-6e5f7",
+    "storage_bucket": "recone-6e5f7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:319520875921:android:bc6e2da39a5cafdb",
+        "android_client_info": {
+          "package_name": "com.example.sebastian.recone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "319520875921-5mb1k66320qd6toms6l2s07oied0c466.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBfaPHVmH9wwpYQ8_sHp7nmS1dZnIYX2No"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
