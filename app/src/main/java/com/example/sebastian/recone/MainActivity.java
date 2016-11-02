@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
     Intent recognizerIntent;
     ArrayList<String> resultStringArrayList;
 
-    private FirebaseRecyclerAdapter<Map, ItemViewHolder> mAdapter;
+    private FirebaseRecyclerAdapter<Integer, ItemViewHolder> mAdapter;
     private RecyclerView mRecycler;
     private LinearLayoutManager mManager;
 
@@ -62,44 +62,19 @@ public class MainActivity extends AppCompatActivity {
         mRecycler = (RecyclerView) findViewById(R.id.messages_list);
         mRecycler.setHasFixedSize(true);
 
-
+        mManager = new LinearLayoutManager(this);
+        mManager.setReverseLayout(true);
+        mManager.setStackFromEnd(true);
+        mRecycler.setLayoutManager(mManager);
 
         instrucciones = new ArrayList<Instruccion>();
-       /* ArrayList<String> palabras = new ArrayList<String>();
-        palabras.add("enciende");
-        instrucciones.add(new Instruccion(palabras,new int[]{0,1}));
-        palabras = new ArrayList<String>();
-        palabras.add("apaga");
-        instrucciones.add(new Instruccion(palabras,new int[]{0,1}));*/
-
         objetos = new ArrayList<Objeto>();
-        /*palabras = new ArrayList<String>();
-        palabras.add("luz");
-        objetos.add(new Objeto(palabras,new int[]{0,1},false));
-        palabras = new ArrayList<String>();
-        palabras.add("calefaccion");
-        objetos.add(new Objeto(palabras,new int[]{0,1,2},true));*/
-
         lugares = new ArrayList<Lugar>();
-        /*palabras = new ArrayList<String>();
-        palabras.add("salon");
-        lugares.add(new Lugar(palabras,new int[]{}));
-        palabras = new ArrayList<String>();
-        palabras.add("pasillo");
-        lugares.add(new Lugar(palabras,new int[]{}));
-        palabras = new ArrayList<String>();
-        palabras.add("general");
-        lugares.add(new Lugar(palabras,new int[]{}));*/
 
         database = FirebaseDatabase.getInstance();
         DatabaseReference refLugares = database.getReference("lugares");
-        //refLugares.setValue(lugares);
-
         DatabaseReference refObjetos = database.getReference("objetos");
-        //refObjetos.setValue(objetos);
-
         DatabaseReference refInstrucciones = database.getReference("instrucciones");
-        //refInstrucciones.setValue(instrucciones);
 
         ValueEventListener lugaresListener = new ValueEventListener() {
             @Override
@@ -181,18 +156,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
         DatabaseReference refcasa = database.getReference("casas/0");
         Query postsQuery = getQuery(refcasa);
 
-        mAdapter = new FirebaseRecyclerAdapter<Map, ItemViewHolder>(Map.class, R.layout.item_list,
+        mAdapter = new FirebaseRecyclerAdapter<Integer, ItemViewHolder>(Integer.class, R.layout.item_list,
                 ItemViewHolder.class, postsQuery) {
             @Override
-            protected void populateViewHolder(final ItemViewHolder viewHolder, final Map model, final int position) {
+            protected void populateViewHolder(final ItemViewHolder viewHolder, final Integer model, final int position) {
                 final DatabaseReference postRef = getRef(position);
 
                 // Set click listener for the whole post view
-                final String itemKey = postRef.getKey();
-                final int itemValue = (int) model.get(itemKey);
+                String itemKey = postRef.getKey();
+                String[] spl = itemKey.split("-");
+                itemKey = spl[0]+"/"+spl[1];
+
+                final int itemValue = model;
                 Log.d(TAG,itemKey+" "+itemValue);
 
                 viewHolder.bindToItem(itemKey,String.valueOf(itemValue));
